@@ -176,6 +176,10 @@ namespace WatchConnectivity
 					{
 						dictionary[key] = (message[nativeKey] as NSNumber)?.FloatValue ?? 0f;
 					}
+					else if (key == WatchMessage.BatteryPercentVoltage)
+					{
+						dictionary[key] = (message[nativeKey] as NSNumber)?.FloatValue ?? 0f;
+					}
 					else if (key == WatchMessage.Distance || key == WatchMessage.SpeedUnitsLabel)
 					{
 						dictionary[key] = (message[nativeKey] as NSString)?.ToString() ?? String.Empty;

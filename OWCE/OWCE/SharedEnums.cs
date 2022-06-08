@@ -9,5 +9,6 @@ namespace OWCE
         BatteryPercent,
         Distance,
         SpeedUnitsLabel,
+        BatteryPercentVoltage
     }
 }

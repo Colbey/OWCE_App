@@ -5,7 +5,7 @@
 	<key>CFBundleName</key>
 	<string>OWCE.macOS</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.owcommunity.OWCE-macOS</string>
+	<string>com.anapaapps.OWCE-macOS</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>

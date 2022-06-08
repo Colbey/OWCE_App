@@ -45,6 +45,9 @@ namespace OWCE.WatchOS.WatchOSExtension
 		[Outlet]
 		WatchKit.WKInterfaceLabel voltageLabel { get; set; }
 
+		[Outlet]
+		WatchKit.WKInterfaceLabel percentVoltageLabel { get; set; }
+
 		[Action ("darkModeTogglePressed")]
 		partial void darkModeTogglePressed ();
 		
@@ -103,6 +106,12 @@ namespace OWCE.WatchOS.WatchOSExtension
 			if (voltageLabel != null) {
 				voltageLabel.Dispose ();
 				voltageLabel = null;
+			}
+
+			if (percentVoltageLabel != null)
+			{
+				percentVoltageLabel.Dispose();
+				percentVoltageLabel = null;
 			}
 		}
 	}

@@ -21,6 +21,7 @@ using OWCE.DependencyInterfaces;
 using Rg.Plugins.Popup.Services;
 using MvvmHelpers;
 using OWCE.PropertyChangeHandlers;
+using OWCE.Converters;
 
 namespace OWCE
 {
@@ -239,6 +240,13 @@ namespace OWCE
         {
             get { return _batteryVoltage; }
             set { if (_batteryVoltage.AlmostEqualTo(value) == false) { _batteryVoltage = value; OnPropertyChanged(); } }
+        }
+
+        float _batteryPercentVoltage;
+        public float BatteryPercentVoltage
+        {
+            get { return _batteryPercentVoltage; }
+            set { if (_batteryPercentVoltage.AlmostEqualTo(value) == false) { _batteryPercentVoltage = value; OnPropertyChanged(); } }
         }
 
         private int _safetyHeadroom;
@@ -1270,6 +1278,7 @@ namespace OWCE
                     break;
                 case BatteryVoltageUUID:
                     BatteryVoltage = 0.1f * value;
+                    BatteryPercentVoltage = BatteryVoltageConverter.GetBatteryPercentEstimate(0.1f * value);
                     break;
                 case SafetyHeadroomUUID:
                     SafetyHeadroom = value;

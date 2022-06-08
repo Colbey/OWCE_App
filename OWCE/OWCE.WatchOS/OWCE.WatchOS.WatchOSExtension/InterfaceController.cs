@@ -19,7 +19,9 @@ namespace OWCE.WatchOS.WatchOSExtension
         }
 
         private bool darkMode = true;
+        private float _voltage = 0;
 
+        private float _percentVoltage = 0;
         public override void WillActivate()
         {
             // This method is called when the watch view controller is about to be visible to the user.
@@ -100,7 +102,11 @@ namespace OWCE.WatchOS.WatchOSExtension
                     }
                     else if(message.Key == WatchMessage.Voltage)
                     {
-                        this.voltageLabel.SetText(String.Format("{0:F2}V", message.Value));
+                        this.voltageLabel.SetText(String.Format("{0:F2}V", message.Value));                        
+                    }
+                    else if (message.Key == WatchMessage.BatteryPercentVoltage)
+                    {
+                        this.percentVoltageLabel.SetText(String.Format("{0:F0}%", message.Value));
                     }
                     else if(message.Key == WatchMessage.Distance)
                     {

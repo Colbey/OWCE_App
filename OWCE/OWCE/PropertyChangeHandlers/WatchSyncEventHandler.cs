@@ -10,7 +10,7 @@ namespace OWCE.PropertyChangeHandlers
     public class WatchSyncEventHandler
     {
         private static readonly HashSet<String> PropertiesToWatch =
-            new HashSet<string> { "BatteryPercent", "BatteryVoltage", "RPM", "TripOdometer" };
+            new HashSet<string> { "BatteryPercent", "BatteryVoltage", "RPM", "TripOdometer", "BatteryPercentVoltage" };
 
         public static readonly WatchSyncEventHandler Instance = new WatchSyncEventHandler();
 
@@ -24,6 +24,13 @@ namespace OWCE.PropertyChangeHandlers
             {
                 float voltage = board.BatteryVoltage;
                 watchUpdates[WatchMessage.Voltage] = voltage;
+
+                // For Quart, should add battery percent here
+            }
+            if (propertyName == null || propertyName.Equals("BatteryPercentVoltage"))
+            {
+                float percentVoltage = board.BatteryPercentVoltage;
+                watchUpdates[WatchMessage.BatteryPercentVoltage] = percentVoltage;
 
                 // For Quart, should add battery percent here
             }

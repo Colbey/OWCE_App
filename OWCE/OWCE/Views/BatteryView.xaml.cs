@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using OWCE.Converters;
 using OWCE.Extensions;
 using OWCE.Models;
 using Xamarin.CommunityToolkit.UI.Views;
@@ -19,13 +20,6 @@ namespace OWCE.Views
           typeof(BatteryView),
           0,
           BindingMode.OneWay);
-
-
-
-
-
-
-
         /*
         private int _batteryPercent;
         public int BatteryPercent
@@ -53,7 +47,48 @@ namespace OWCE.Views
             }
         }
 
+        public static readonly BindableProperty BatteryPercentVoltageProperty = BindableProperty.Create(
+          "BatteryPercentVoltage",
+          typeof(float),
+          typeof(BatteryView),
+          0f,
+          BindingMode.OneWay);
 
+        public float BatteryPercentVoltage
+        {
+            get
+            {
+                //take voltage minus bottom (if voltage over 50, bottom is 43.5 else bottom is 44 for a safety gap)
+                //then divde by 18.75
+                //then multiply by 100
+                /*
+                 62.25 , 100
+                60.75 , 93
+                60 , 86
+                58.8 , 79
+                56.7 , 65
+                55.5 , 58
+                54.75 , 51
+                54 , 44
+                52.95 , 37
+                51.75 , 30
+                51 , 23
+                48 , 16
+                45 , 9
+                43.5 , 0
+                 */
+                //float _voltage = _batteryVoltage;
+                //float _bottom = (float)43.5;
+                //if (_voltage >= 50) { _bottom = 44; }
+                
+                ////return (float)((_voltage - _bottom) / 18.75) * 100;
+                return (float)GetValue(BatteryPercentVoltageProperty);
+            }
+            set
+            {
+                SetValue(BatteryPercentVoltageProperty, value);
+            }
+        }
 
         public static readonly BindableProperty BatteryVoltageProperty = BindableProperty.Create(
           "BatteryVoltage",
@@ -61,7 +96,7 @@ namespace OWCE.Views
           typeof(BatteryView),
           0f,
           BindingMode.OneWay);
-
+        private float _batteryVoltage = 1;
         public float BatteryVoltage
         {
             get
@@ -70,6 +105,7 @@ namespace OWCE.Views
             }
             set
             {
+                _batteryVoltage = value;
                 SetValue(BatteryVoltageProperty, value);
             }
         }
@@ -119,14 +155,28 @@ namespace OWCE.Views
             //System.Diagnostics.Debug.WriteLine($"OnPropertyChanged: {propertyName}");
             if (BatteryPercentProperty.PropertyName.Equals(propertyName))
             {
+
                 BatteryBar.AnimateWidthPercent((float)BatteryPercent * 0.01);
             }
             else if (BatteryCellsProperty.PropertyName.Equals(propertyName))
             {
                 //BatteryCellsView.BindingContext = BatteryCells;
             }
-        }
+            else if (BatteryPercentVoltageProperty.PropertyName.Equals(propertyName))
+            {
+                System.Diagnostics.Debug.WriteLine($"OnPropertyChanged: {propertyName}");
+            }
+            else if (BatteryVoltageProperty.PropertyName.Equals(propertyName))
+            {
+                float _voltage = BatteryVoltage;
+                float _bottom = (float)43.5;
+                if (_voltage >= 50) { _bottom = 44; }
+                //linear conversion
+                //BatteryPercentVoltage = (float)((_voltage - _bottom) / 18.75) * 100;
 
+                BatteryPercentVoltage = BatteryVoltageConverter.GetBatteryPercentEstimate(BatteryVoltage);
+            }
+        }
         /*
         private void BatteryCells_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
